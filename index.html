@@ -1,0 +1,947 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>VIP Premium Membership</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{font-size:16px}
+body{
+  font-family:"Inter",sans-serif;
+  background:#0d0b08;
+  color:#e8dcc8;
+  min-height:100vh;
+  overflow-x:hidden;
+  background-image:
+    radial-gradient(ellipse at 15% 10%, rgba(212,175,55,0.07) 0%, transparent 45%),
+    radial-gradient(ellipse at 85% 90%, rgba(139,105,20,0.06) 0%, transparent 45%),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+}
+
+/* Top Nav */
+.topnav{
+  background:linear-gradient(180deg,#12100c 0%,#1a1610 100%);
+  border-bottom:1px solid rgba(212,175,55,0.25);
+  height:58px;
+  display:flex;
+  align-items:center;
+  padding:0 24px;
+  position:sticky;
+  top:0;
+  z-index:300;
+  box-shadow:0 4px 20px rgba(0,0,0,0.4);
+}
+.tn{width:100%;max-width:1180px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+.brand{
+  font-family:"Cormorant Garamond",serif;
+  font-size:22px;
+  font-weight:700;
+  color:#f0e6d0;
+  letter-spacing:1px;
+}
+.brand span{
+  background:linear-gradient(135deg,#d4af37,#f5d76e,#d4af37);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.secure-badge{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  font-size:11px;
+  color:#d4af37;
+  font-weight:600;
+  background:rgba(212,175,55,0.08);
+  padding:6px 14px;
+  border-radius:30px;
+  border:1px solid rgba(212,175,55,0.3);
+  letter-spacing:0.4px;
+}
+
+/* Layout - wider left */
+.wrap{
+  width:100%;
+  max-width:1180px;
+  margin:0 auto;
+  padding:24px 20px 48px;
+  display:grid;
+  grid-template-columns:44% 56%;
+  gap:0 22px;
+  align-items:start;
+}
+.sidebar{position:sticky;top:78px;display:flex;flex-direction:column;gap:16px}
+.main-col{display:flex;flex-direction:column;gap:16px}
+
+/* Creator Card - dark premium */
+.creator-card{
+  background:linear-gradient(160deg,#1a1610 0%,#221c14 40%,#2a2218 70%,#1e1a12 100%);
+  border-radius:22px;
+  padding:26px 22px 22px;
+  color:#f0e6d0;
+  position:relative;
+  overflow:hidden;
+  box-shadow:
+    0 16px 48px rgba(0,0,0,0.45),
+    inset 0 1px 0 rgba(212,175,55,0.15);
+  border:1px solid rgba(212,175,55,0.22);
+}
+.creator-card::before{
+  content:"";
+  position:absolute;
+  top:-50px;right:-50px;
+  width:180px;height:180px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(212,175,55,0.12) 0%,transparent 70%);
+  animation:glowFloat 6s ease-in-out infinite;
+}
+.creator-card::after{
+  content:"";
+  position:absolute;
+  bottom:-30px;left:-30px;
+  width:120px;height:120px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(212,175,55,0.08) 0%,transparent 70%);
+  animation:glowFloat 7s ease-in-out infinite reverse;
+}
+@keyframes glowFloat{
+  0%,100%{transform:translate(0,0) scale(1);opacity:0.6}
+  50%{transform:translate(10px,-6px) scale(1.06);opacity:1}
+}
+.cbytag{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:11px;
+  opacity:0.85;
+  margin-bottom:16px;
+  position:relative;
+  z-index:1;
+  text-transform:uppercase;
+  letter-spacing:1.4px;
+  color:#d4af37;
+}
+.vcheck{
+  width:18px;height:18px;
+  background:linear-gradient(135deg,#d4af37,#f5d76e);
+  border-radius:50%;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-size:10px;
+  font-weight:800;
+  color:#1a1408;
+  flex-shrink:0;
+  box-shadow:0 0 10px rgba(212,175,55,0.45);
+}
+
+/* Logo */
+.vip-wrap{
+  display:flex;
+  justify-content:center;
+  margin-bottom:18px;
+  position:relative;
+  z-index:1;
+  perspective:600px;
+}
+.vip-logo{
+  position:relative;
+  width:148px;
+  height:148px;
+  cursor:pointer;
+  transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+}
+.vip-logo:hover{transform:scale(1.07) rotateY(6deg)}
+.vip-logo:hover .ring-outer{animation-duration:4s}
+.vip-logo:hover .ring-mid{animation-duration:6s}
+.vip-logo:hover .crown-inner{filter:drop-shadow(0 0 16px rgba(255,215,0,0.85)) brightness(1.12)}
+.vip-logo:hover .sparkle{opacity:1;animation-play-state:running}
+
+.ring-outer{
+  position:absolute;
+  inset:0;
+  border-radius:50%;
+  background:conic-gradient(from 0deg,#d4af37,#f5d76e,#fff8e7,#d4af37,#b8860b,#f5d76e,#d4af37);
+  padding:3px;
+  animation:spinRing 12s linear infinite;
+  box-shadow:
+    0 0 0 2px rgba(212,175,55,0.25),
+    0 0 32px rgba(212,175,55,0.35),
+    0 12px 36px rgba(0,0,0,0.5);
+}
+.ring-outer::before{
+  content:"";
+  position:absolute;
+  inset:3px;
+  border-radius:50%;
+  background:linear-gradient(145deg,#1a1610,#12100c 40%,#0d0b08);
+}
+@keyframes spinRing{
+  from{transform:rotate(0deg)}
+  to{transform:rotate(360deg)}
+}
+.ring-mid{
+  position:absolute;
+  inset:10px;
+  border-radius:50%;
+  border:1.5px dashed rgba(212,175,55,0.5);
+  animation:spinRing 18s linear infinite reverse;
+  pointer-events:none;
+}
+.crown-circle{
+  position:absolute;
+  inset:18px;
+  border-radius:50%;
+  background:
+    radial-gradient(circle at 35% 30%,rgba(212,175,55,0.15) 0%,transparent 55%),
+    linear-gradient(160deg,#221c14 0%,#16120c 50%,#0d0b08 100%);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:
+    inset 0 2px 12px rgba(0,0,0,0.55),
+    inset 0 -1px 0 rgba(212,175,55,0.12),
+    0 0 18px rgba(212,175,55,0.12);
+  border:1px solid rgba(212,175,55,0.22);
+  overflow:hidden;
+}
+.crown-inner{
+  width:70%;
+  height:70%;
+  filter:drop-shadow(0 0 12px rgba(255,215,0,0.65));
+  transition:filter 0.4s;
+  animation:crownFloat 3.2s ease-in-out infinite;
+  display:block;
+}
+@keyframes crownFloat{
+  0%,100%{transform:translateY(0) scale(1)}
+  50%{transform:translateY(-4px) scale(1.04)}
+}
+.sparkle{
+  position:absolute;
+  width:5px;height:5px;
+  border-radius:50%;
+  background:#fff8e7;
+  box-shadow:0 0 8px 2px rgba(255,215,0,0.75);
+  opacity:0;
+  pointer-events:none;
+  animation:sparkleAnim 2.5s ease-in-out infinite;
+  animation-play-state:paused;
+}
+.sparkle:nth-child(1){top:12%;left:22%;animation-delay:0s}
+.sparkle:nth-child(2){top:18%;right:18%;animation-delay:0.4s}
+.sparkle:nth-child(3){bottom:22%;left:15%;animation-delay:0.8s}
+.sparkle:nth-child(4){bottom:15%;right:20%;animation-delay:1.2s}
+.sparkle:nth-child(5){top:45%;left:8%;animation-delay:0.6s}
+.sparkle:nth-child(6){top:40%;right:6%;animation-delay:1s}
+@keyframes sparkleAnim{
+  0%,100%{opacity:0;transform:scale(0.4)}
+  40%{opacity:1;transform:scale(1.2)}
+  70%{opacity:0.6;transform:scale(0.8)}
+}
+.glow-pulse{
+  position:absolute;
+  inset:-8px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(212,175,55,0.22) 0%,transparent 70%);
+  animation:glowPulse 3s ease-in-out infinite;
+  pointer-events:none;
+  z-index:-1;
+}
+@keyframes glowPulse{
+  0%,100%{opacity:0.45;transform:scale(1)}
+  50%{opacity:1;transform:scale(1.1)}
+}
+
+.edu-pill{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  background:rgba(212,175,55,0.1);
+  border:1px solid rgba(212,175,55,0.3);
+  border-radius:30px;
+  padding:7px 16px;
+  font-size:11px;
+  font-weight:600;
+  position:relative;
+  z-index:1;
+  margin-bottom:14px;
+  letter-spacing:0.5px;
+  color:#f5d76e;
+}
+.live-box{
+  background:rgba(212,175,55,0.07);
+  border:1px solid rgba(212,175,55,0.2);
+  border-radius:14px;
+  padding:13px 16px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  position:relative;
+  z-index:1;
+}
+.ldot{
+  width:9px;height:9px;
+  border-radius:50%;
+  background:#d4af37;
+  flex-shrink:0;
+  animation:lpulse 1.8s ease-in-out infinite;
+  box-shadow:0 0 0 3px rgba(212,175,55,0.25);
+}
+@keyframes lpulse{
+  0%,100%{box-shadow:0 0 0 3px rgba(212,175,55,0.25)}
+  50%{box-shadow:0 0 0 7px rgba(212,175,55,0.08)}
+}
+.live-lbl{font-size:10px;opacity:0.65;text-transform:uppercase;letter-spacing:1.1px;color:#c9a84c}
+.live-num{
+  font-size:24px;
+  font-weight:700;
+  color:#f5d76e;
+  font-variant-numeric:tabular-nums;
+  line-height:1.1;
+  font-family:"Cormorant Garamond",serif;
+}
+
+/* Light cards on dark bg */
+.disc-card{
+  background:linear-gradient(145deg,#f7f2e8,#f0e9dc);
+  border-radius:18px;
+  padding:18px;
+  box-shadow:0 6px 24px rgba(0,0,0,0.25);
+  border:1px solid rgba(212,175,55,0.2);
+}
+.ctitle{
+  font-family:"Cormorant Garamond",serif;
+  font-size:15px;
+  font-weight:700;
+  margin-bottom:10px;
+  color:#2c2110;
+  letter-spacing:0.4px;
+}
+.disc-inner{
+  background:linear-gradient(135deg,#faf6ef,#f3ebd8);
+  border:1px solid rgba(212,175,55,0.22);
+  border-radius:12px;
+  padding:13px 15px;
+}
+.disc-inner .dh{
+  font-size:12px;
+  font-weight:700;
+  color:#8b6914;
+  margin-bottom:5px;
+}
+.disc-inner p{
+  font-size:12.5px;
+  color:#5c4a2a;
+  line-height:1.7;
+}
+
+/* Trust badges - light */
+.trust-row{display:flex;gap:8px;flex-wrap:wrap}
+.tbadge{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  background:linear-gradient(145deg,#f7f2e8,#f0e9dc);
+  border:1px solid rgba(212,175,55,0.25);
+  border-radius:30px;
+  padding:7px 13px;
+  font-size:11px;
+  font-weight:600;
+  color:#3d3220;
+  white-space:nowrap;
+  box-shadow:0 3px 12px rgba(0,0,0,0.12);
+  transition:all 0.25s;
+}
+.tbadge:hover{
+  border-color:#d4af37;
+  box-shadow:0 4px 16px rgba(212,175,55,0.2);
+  transform:translateY(-1px);
+}
+.tbadge .ti{font-size:12px}
+
+/* Plans */
+.plans-wrap{display:flex;flex-direction:column;gap:16px}
+.plans-toprow{display:flex;align-items:center;justify-content:space-between}
+.plans-h{
+  font-family:"Cormorant Garamond",serif;
+  font-size:20px;
+  font-weight:700;
+  color:#f0e6d0;
+  letter-spacing:0.4px;
+}
+.plans-badge{
+  font-size:11px;
+  color:#d4af37;
+  background:rgba(212,175,55,0.1);
+  padding:5px 14px;
+  border-radius:20px;
+  border:1px solid rgba(212,175,55,0.3);
+  font-weight:600;
+}
+.plan-list{display:flex;flex-direction:column;gap:12px}
+.plan-card{
+  background:linear-gradient(145deg,#faf6ef,#f3ebd8);
+  border-radius:18px;
+  padding:18px 20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  border:1.5px solid rgba(212,175,55,0.2);
+  transition:all 0.3s cubic-bezier(0.4,0,0.2,1);
+  position:relative;
+  overflow:hidden;
+  cursor:pointer;
+  box-shadow:0 6px 22px rgba(0,0,0,0.18);
+}
+.plan-card::before{
+  content:"";
+  position:absolute;
+  left:0;top:0;bottom:0;
+  width:4px;
+  background:linear-gradient(180deg,#d4af37,#b8860b);
+  border-radius:4px 0 0 4px;
+}
+.plan-card:hover{
+  border-color:#d4af37;
+  box-shadow:0 10px 32px rgba(212,175,55,0.2);
+  transform:translateY(-2px);
+}
+.plan-card.popular{
+  border-color:#d4af37;
+  background:linear-gradient(145deg,#fffdf8,#f8f0e0);
+  box-shadow:0 8px 28px rgba(212,175,55,0.18);
+}
+.poptag{
+  position:absolute;
+  top:-1px;left:50%;
+  transform:translateX(-50%);
+  background:linear-gradient(90deg,#b8860b,#d4af37,#f5d76e,#d4af37,#b8860b);
+  background-size:200% 100%;
+  animation:goldShine 3s linear infinite;
+  color:#1a1408;
+  font-size:9px;
+  font-weight:800;
+  padding:4px 20px;
+  border-radius:0 0 10px 10px;
+  letter-spacing:1.2px;
+  text-transform:uppercase;
+  white-space:nowrap;
+  box-shadow:0 2px 10px rgba(212,175,55,0.35);
+}
+@keyframes goldShine{
+  0%{background-position:0% 50%}
+  100%{background-position:200% 50%}
+}
+.star-rib{
+  position:absolute;
+  top:-1px;right:16px;
+  background:linear-gradient(160deg,#d4af37,#f5d76e);
+  color:#1a1408;
+  font-size:13px;
+  width:28px;height:38px;
+  display:flex;
+  align-items:flex-end;
+  justify-content:center;
+  padding-bottom:5px;
+  clip-path:polygon(0 0,100% 0,100% 82%,50% 100%,0 82%);
+  box-shadow:0 2px 8px rgba(212,175,55,0.3);
+}
+.pinfo{flex:1;min-width:0}
+.pname{
+  font-family:"Cormorant Garamond",serif;
+  font-size:16px;
+  font-weight:700;
+  color:#2c2110;
+  margin-bottom:3px;
+}
+.pprice-row{display:flex;align-items:baseline;gap:7px;margin-bottom:5px}
+.pprice{
+  font-size:23px;
+  font-weight:700;
+  color:#2c2110;
+  letter-spacing:-0.4px;
+  font-family:"Cormorant Garamond",serif;
+}
+.pdur{font-size:12px;color:#8b7355;font-weight:500}
+.plive{
+  display:flex;
+  align-items:center;
+  gap:5px;
+  font-size:11px;
+  color:#8b6914;
+  font-weight:600;
+}
+.mdot{
+  width:6px;height:6px;
+  border-radius:50%;
+  background:#d4af37;
+  animation:lpulse 1.8s ease-in-out infinite;
+  flex-shrink:0;
+}
+.pright{display:flex;flex-direction:column;align-items:flex-end;gap:8px;flex-shrink:0}
+.buybtn{
+  background:linear-gradient(135deg,#b8860b 0%,#d4af37 40%,#f5d76e 70%,#d4af37 100%);
+  background-size:200% 100%;
+  color:#1a1408;
+  border:none;
+  padding:12px 26px;
+  border-radius:12px;
+  font-size:13px;
+  font-weight:700;
+  cursor:pointer;
+  font-family:"Inter",sans-serif;
+  transition:all 0.28s;
+  box-shadow:0 4px 16px rgba(212,175,55,0.35);
+  white-space:nowrap;
+  letter-spacing:0.3px;
+  position:relative;
+  overflow:hidden;
+}
+.buybtn::after{
+  content:"";
+  position:absolute;
+  top:0;left:-100%;
+  width:55%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.35),transparent);
+  transition:left 0.45s;
+}
+.buybtn:hover{
+  transform:scale(1.04);
+  box-shadow:0 6px 24px rgba(212,175,55,0.5);
+  background-position:100% 50%;
+}
+.buybtn:hover::after{left:120%}
+.buybtn:active{transform:scale(0.97)}
+
+/* Features - light cards */
+.feat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.fcard{
+  background:linear-gradient(145deg,#f7f2e8,#f0e9dc);
+  border-radius:14px;
+  padding:16px 10px;
+  text-align:center;
+  box-shadow:0 4px 16px rgba(0,0,0,0.15);
+  border:1px solid rgba(212,175,55,0.18);
+  transition:all 0.28s;
+}
+.fcard:hover{
+  transform:translateY(-3px);
+  box-shadow:0 8px 24px rgba(212,175,55,0.15);
+  border-color:#d4af37;
+}
+.ficon{font-size:26px;margin-bottom:6px;filter:drop-shadow(0 2px 4px rgba(212,175,55,0.25))}
+.fname{
+  font-size:12px;
+  font-weight:700;
+  color:#2c2110;
+  font-family:"Cormorant Garamond",serif;
+}
+.fsub{font-size:10px;color:#8b7355;margin-top:2px}
+
+/* Testimonials - light */
+.testi{
+  background:linear-gradient(145deg,#f7f2e8,#f0e9dc);
+  border-radius:18px;
+  padding:20px;
+  box-shadow:0 6px 24px rgba(0,0,0,0.2);
+  border:1px solid rgba(212,175,55,0.18);
+}
+.sec-hd{
+  font-family:"Cormorant Garamond",serif;
+  font-size:15px;
+  font-weight:700;
+  color:#2c2110;
+  margin-bottom:14px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.sec-hd::after{
+  content:"";
+  flex:1;
+  height:1px;
+  background:linear-gradient(90deg,rgba(212,175,55,0.35),transparent);
+}
+.t-outer{overflow:hidden;border-radius:12px}
+.t-track{display:flex;gap:12px;transition:transform 0.45s cubic-bezier(0.4,0,0.2,1)}
+.t-slide{
+  min-width:100%;
+  background:linear-gradient(135deg,#faf6ef,#f3ebd8);
+  border-radius:12px;
+  padding:18px;
+  border:1px solid rgba(212,175,55,0.25);
+}
+.t-stars{color:#d4af37;font-size:15px;margin-bottom:10px;letter-spacing:2px}
+.t-text{
+  font-size:13px;
+  color:#4a3a1e;
+  line-height:1.7;
+  margin-bottom:12px;
+  font-style:italic;
+}
+.t-auth{font-size:12px;font-weight:700;color:#8b6914}
+.t-dots{display:flex;justify-content:center;gap:6px;margin-top:14px}
+.tdot{
+  width:7px;height:7px;
+  border-radius:50%;
+  background:#d4c4a0;
+  cursor:pointer;
+  transition:all 0.28s;
+}
+.tdot.active{
+  background:linear-gradient(90deg,#d4af37,#f5d76e);
+  width:22px;
+  border-radius:4px;
+}
+.t-nav{display:flex;justify-content:flex-end;gap:8px;margin-top:10px}
+.tnbtn{
+  width:34px;height:34px;
+  border:1.5px solid rgba(212,175,55,0.35);
+  border-radius:50%;
+  background:#faf6ef;
+  cursor:pointer;
+  font-size:15px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:all 0.22s;
+  color:#8b6914;
+}
+.tnbtn:hover{
+  background:linear-gradient(135deg,#d4af37,#f5d76e);
+  border-color:#d4af37;
+  color:#1a1408;
+  box-shadow:0 3px 10px rgba(212,175,55,0.3);
+}
+
+/* Footer */
+.footer{
+  background:linear-gradient(180deg,#0d0b08,#16120c);
+  padding:28px 20px;
+  text-align:center;
+  border-top:1px solid rgba(212,175,55,0.18);
+}
+.footer p{
+  font-size:12px;
+  color:#8a7a5a;
+  line-height:1.8;
+  letter-spacing:0.3px;
+}
+
+/* Toast */
+.toast{
+  position:fixed;
+  bottom:24px;left:50%;
+  transform:translateX(-50%) translateY(20px);
+  background:linear-gradient(135deg,#1a1610,#221c14);
+  color:#f5d76e;
+  padding:12px 24px;
+  border-radius:30px;
+  font-size:13px;
+  font-weight:600;
+  opacity:0;
+  transition:all 0.32s;
+  pointer-events:none;
+  z-index:999;
+  white-space:nowrap;
+  box-shadow:0 8px 28px rgba(0,0,0,0.4);
+  border:1px solid rgba(212,175,55,0.35);
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ========== MOBILE ========== */
+@media(max-width:767px){
+  .topnav{height:52px;padding:0 14px}
+  .brand{font-size:18px}
+  .secure-badge{font-size:10px;padding:5px 10px}
+  .wrap{
+    display:flex !important;
+    flex-direction:column !important;
+    padding:14px 12px 36px;
+    gap:14px;
+    max-width:100%;
+  }
+  .sidebar{position:static !important;width:100%}
+  .main-col{width:100%}
+  .creator-card{padding:20px 16px 18px;border-radius:18px}
+  .vip-logo{width:120px;height:120px}
+  .live-num{font-size:22px}
+  .plans-h{font-size:17px}
+  .pprice{font-size:20px}
+  .buybtn{padding:11px 18px;font-size:12px;min-width:88px}
+  .plan-card{padding:16px 14px;gap:10px}
+  .pname{font-size:14px}
+  .feat-grid{grid-template-columns:repeat(2,1fr);gap:8px}
+  .trust-row{
+    flex-wrap:nowrap;
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+    padding-bottom:2px;
+    gap:6px;
+  }
+  .trust-row::-webkit-scrollbar{display:none}
+  .tbadge{flex-shrink:0;padding:6px 11px;font-size:10px}
+  .testi{padding:16px 14px}
+  .t-slide{padding:16px}
+  .poptag{font-size:8px;padding:3px 14px}
+  .star-rib{right:12px;width:24px;height:34px;font-size:11px}
+}
+@media(min-width:768px){
+  .buybtn{padding:13px 28px;font-size:14px;border-radius:12px}
+}
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="tn">
+    <div class="brand">VIP <span>Premium</span></div>
+    <div class="secure-badge">🔒 Secure Membership</div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <aside class="sidebar">
+    <div class="creator-card">
+      <div class="cbytag"><div class="vcheck">✓</div> Exclusive Access</div>
+      <div class="vip-wrap">
+        <div class="vip-logo" id="vipLogo">
+          <div class="glow-pulse"></div>
+          <div class="ring-outer"></div>
+          <div class="ring-mid"></div>
+          <div class="crown-circle">
+            <svg class="crown-inner" width="100%" height="100%" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6 44 L6 22 L16 34 L24 10 L32 30 L40 10 L48 34 L58 22 L58 44 Z" fill="url(#cGold)" stroke="#B8860B" stroke-width="1.4" stroke-linejoin="round"/>
+              <rect x="6" y="44" width="52" height="9" rx="2.5" fill="url(#cGold)" stroke="#B8860B" stroke-width="1.2"/>
+              <rect x="8" y="53" width="48" height="3" rx="1.5" fill="#B8860B"/>
+              <circle cx="32" cy="38" r="5.5" fill="#C41E3A"/>
+              <circle cx="30.5" cy="36.5" r="2.2" fill="#FF6B6B" opacity="0.9"/>
+              <circle cx="16" cy="38" r="3.8" fill="#E8C547"/>
+              <circle cx="15" cy="37" r="1.5" fill="#FFF8E7"/>
+              <circle cx="48" cy="38" r="3.8" fill="#E8C547"/>
+              <circle cx="47" cy="37" r="1.5" fill="#FFF8E7"/>
+              <circle cx="32" cy="10" r="4.5" fill="#FFD700" stroke="#B8860B" stroke-width="0.9"/>
+              <circle cx="31" cy="8.8" r="1.8" fill="#FFF8E7"/>
+              <circle cx="6" cy="22" r="3.5" fill="#FFD700" stroke="#B8860B" stroke-width="0.7"/>
+              <circle cx="5.2" cy="21.2" r="1.3" fill="#FFF8E7"/>
+              <circle cx="58" cy="22" r="3.5" fill="#FFD700" stroke="#B8860B" stroke-width="0.7"/>
+              <circle cx="57.2" cy="21.2" r="1.3" fill="#FFF8E7"/>
+              <circle cx="24" cy="10" r="3" fill="#F5D76E" stroke="#B8860B" stroke-width="0.5"/>
+              <circle cx="40" cy="10" r="3" fill="#F5D76E" stroke="#B8860B" stroke-width="0.5"/>
+              <defs>
+                <linearGradient id="cGold" x1="6" y1="8" x2="58" y2="56" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#FFF8E7"/>
+                  <stop offset="0.25" stop-color="#F5D76E"/>
+                  <stop offset="0.55" stop-color="#D4AF37"/>
+                  <stop offset="1" stop-color="#B8860B"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <div class="sparkle"></div>
+          <div class="sparkle"></div>
+          <div class="sparkle"></div>
+          <div class="sparkle"></div>
+          <div class="sparkle"></div>
+          <div class="sparkle"></div>
+        </div>
+      </div>
+      <div style="text-align:center;position:relative;z-index:1;margin-bottom:14px">
+        <div class="edu-pill">🎓 Education</div>
+      </div>
+      <div class="live-box">
+        <div class="ldot"></div>
+        <div style="flex:1">
+          <div class="live-lbl">Live Members</div>
+          <div class="live-num" id="totalLive">0</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="disc-card">
+      <div class="ctitle">Description</div>
+      <div class="disc-inner">
+        <div class="dh">Premium Membership</div>
+        <p>Join our exclusive VIP Membership to unlock premium features, expert insights, and high-value content designed to help you grow faster and smarter.</p>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main-col">
+    <div class="trust-row">
+      <div class="tbadge"><span class="ti">🔒</span>256-bit SSL</div>
+      <div class="tbadge"><span class="ti">⚡</span>Instant Access</div>
+      <div class="tbadge"><span class="ti">✅</span>Verified Creator</div>
+      <div class="tbadge"><span class="ti">🇮🇳</span>India Trusted</div>
+      <div class="tbadge"><span class="ti">💬</span>24/7 Support</div>
+    </div>
+
+    <div class="plans-wrap">
+      <div class="plans-toprow">
+        <div class="plans-h">Choose Your Plan</div>
+        <div class="plans-badge">3 Plans Available</div>
+      </div>
+
+      <div class="plan-list">
+        <div class="plan-card" onclick="showToast('🔒 Membership details coming soon')">
+          <div class="pinfo">
+            <div class="pname">1 Month</div>
+            <div class="pprice-row"><div class="pprice">₹2,999.00</div><div class="pdur">/ 1 Month</div></div>
+            <div class="plive"><div class="mdot"></div><span id="c1">0</span>&thinsp;members active</div>
+          </div>
+          <div class="pright">
+            <button class="buybtn" onclick="event.stopPropagation();showToast('🔒 Membership details coming soon')">Buy Now</button>
+          </div>
+        </div>
+
+        <div class="plan-card" onclick="showToast('🔒 Membership details coming soon')">
+          <div class="pinfo">
+            <div class="pname">Yearly Plan</div>
+            <div class="pprice-row"><div class="pprice">₹3,999.00</div><div class="pdur">/ 3 Months</div></div>
+            <div class="plive"><div class="mdot"></div><span id="c2">0</span>&thinsp;members active</div>
+          </div>
+          <div class="pright">
+            <button class="buybtn" onclick="event.stopPropagation();showToast('🔒 Membership details coming soon')">Buy Now</button>
+          </div>
+        </div>
+
+        <div class="plan-card popular" onclick="showToast('🔒 Membership details coming soon')">
+          <div class="poptag">★ Most Popular</div>
+          <div class="star-rib">★</div>
+          <div class="pinfo" style="margin-top:16px">
+            <div class="pname" style="color:#b8860b">Life Time</div>
+            <div class="pprice-row"><div class="pprice">₹4,999.00</div><div class="pdur">/ Life time</div></div>
+            <div class="plive"><div class="mdot"></div><span id="c3">0</span>&thinsp;members active</div>
+          </div>
+          <div class="pright" style="margin-top:16px">
+            <button class="buybtn" onclick="event.stopPropagation();showToast('🔒 Membership details coming soon')">Buy Now</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="feat-grid">
+      <div class="fcard"><div class="ficon">📈</div><div class="fname">Live Signals</div><div class="fsub">Real-time alerts</div></div>
+      <div class="fcard"><div class="ficon">🎓</div><div class="fname">Education</div><div class="fsub">Expert sessions</div></div>
+      <div class="fcard"><div class="ficon">💬</div><div class="fname">VIP Group</div><div class="fsub">Private access</div></div>
+      <div class="fcard"><div class="ficon">🔒</div><div class="fname">Secure</div><div class="fsub">256-bit SSL</div></div>
+    </div>
+
+    <div class="testi">
+      <div class="sec-hd">What Members Say</div>
+      <div class="t-outer">
+        <div class="t-track" id="tTrack">
+          <div class="t-slide">
+            <div class="t-stars">★★★★★</div>
+            <div class="t-text">"Signals are incredibly accurate. Made ₹42,000 profit in my very first month! Best trading community I have ever joined."</div>
+            <div class="t-auth">— Ravi K., Mumbai</div>
+          </div>
+          <div class="t-slide">
+            <div class="t-stars">★★★★★</div>
+            <div class="t-text">"Education content is worth 10x the price. Went from a complete beginner to confidently trading in just 3 months!"</div>
+            <div class="t-auth">— Priya S., Delhi</div>
+          </div>
+          <div class="t-slide">
+            <div class="t-stars">★★★★★</div>
+            <div class="t-text">"Always responsive in the VIP group. Live weekend sessions are extremely valuable. Everyone should join this community!"</div>
+            <div class="t-auth">— Aakash T., Pune</div>
+          </div>
+          <div class="t-slide">
+            <div class="t-stars">★★★★★</div>
+            <div class="t-text">"Yearly plan is the best value for money. Consistent signals, excellent support. Totally worth every single rupee!"</div>
+            <div class="t-auth">— Suman R., Bangalore</div>
+          </div>
+        </div>
+      </div>
+      <div class="t-dots" id="tDots"></div>
+      <div class="t-nav">
+        <button class="tnbtn" id="tPrev">‹</button>
+        <button class="tnbtn" id="tNext">›</button>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="footer">
+  <p>© 2026 VIP Membership. All rights reserved.<br>Join, learn, and grow with our exclusive VIP network.</p>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const PLANS=[{id:"c1",start:1287},{id:"c2",start:974},{id:"c3",start:4421}];
+const TOTAL=PLANS.reduce((s,p)=>s+p.start,0);
+const fmt=n=>n.toLocaleString("en-IN");
+
+function animUp(id,target){
+  const el=document.getElementById(id);if(!el)return;
+  let v=0,step=Math.max(1,Math.ceil(target/44));
+  const t=setInterval(()=>{v=Math.min(v+step,target);el.textContent=fmt(v);if(v>=target)clearInterval(t);},18);
+}
+PLANS.forEach(p=>animUp(p.id,p.start));
+animUp("totalLive",TOTAL);
+
+setTimeout(()=>{
+  PLANS.forEach(p=>p.cur=p.start);
+  let tv=TOTAL;
+  setInterval(()=>{
+    PLANS.forEach(p=>{p.cur++;const el=document.getElementById(p.id);if(el)el.textContent=fmt(p.cur);});
+    tv+=Math.floor(Math.random()*3)+1;
+    document.getElementById("totalLive").textContent=fmt(tv);
+  },2000);
+},950);
+
+function showToast(msg){
+  const t=document.getElementById("toast");
+  t.textContent=msg;t.classList.add("show");
+  clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove("show"),2800);
+}
+
+(function(){
+  const logo=document.getElementById("vipLogo");
+  if(!logo)return;
+  logo.addEventListener("click",()=>{
+    logo.style.transition="transform 0.18s ease";
+    logo.style.transform="scale(0.92)";
+    setTimeout(()=>{
+      logo.style.transform="scale(1.1)";
+      setTimeout(()=>{logo.style.transform="";logo.style.transition="";},280);
+    },160);
+    showToast("👑 Royal VIP Access");
+  });
+})();
+
+(function(){
+  const slides=document.querySelectorAll(".t-slide");
+  const track=document.getElementById("tTrack");
+  const dotsW=document.getElementById("tDots");
+  let cur=0,total=slides.length,auto;
+  slides.forEach((_,i)=>{
+    const d=document.createElement("div");
+    d.className="tdot"+(i===0?" active":"");
+    d.onclick=()=>{go(i);reset();};
+    dotsW.appendChild(d);
+  });
+  function go(i){
+    cur=(i+total)%total;
+    track.style.transform="translateX(calc(-"+cur*100+"% - "+cur*12+"px))";
+    document.querySelectorAll(".tdot").forEach((d,j)=>d.className="tdot"+(j===cur?" active":""));
+  }
+  function reset(){clearInterval(auto);auto=setInterval(()=>go(cur+1),4500);}
+  document.getElementById("tNext").onclick=()=>{go(cur+1);reset();};
+  document.getElementById("tPrev").onclick=()=>{go(cur-1);reset();};
+  let sx=0;
+  const outer=document.querySelector(".t-outer");
+  outer.addEventListener("touchstart",e=>sx=e.touches[0].clientX,{passive:true});
+  outer.addEventListener("touchend",e=>{const dx=sx-e.changedTouches[0].clientX;if(Math.abs(dx)>40){go(dx>0?cur+1:cur-1);reset();}});
+  reset();
+})();
+</script>
+</body>
+</html>
